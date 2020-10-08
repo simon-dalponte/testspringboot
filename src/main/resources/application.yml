@@ -1,0 +1,24 @@
+server:
+  port: ${server.port}
+spring:
+  datasource:
+    username: ${spring.datasource.username}
+    password: ${spring.datasource.password}
+    driver-class-name: org.postgresql.Driver
+    url: ${spring.datasource.url}
+    type: com.zaxxer.hikari.HikariDataSource
+
+    jpa:
+      properties:
+        hibernate:
+          dialect: fr.utbm.dsi.inscription_pedag.data.modeleJSON.CustomPostgreSqlDialect
+          jdbc:
+            lob:
+              non_contextual_creation: true
+      show-sql: ${spring.jpa.show-sql}
+      open-in-view: false
+      hibernate:
+        ddl-auto: validate
+
+web-client:
+  url: ${web-client.url}
