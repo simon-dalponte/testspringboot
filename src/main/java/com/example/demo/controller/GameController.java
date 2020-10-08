@@ -16,10 +16,10 @@ public interface GameController {
     public GameDTO save(@RequestBody GameDTO game);
 
     @ApiOperation("Find by Id")
-    public GameDTO findById(@PathVariable("id") Long id);
+    public GameDTO findById(@PathVariable("id") String id);
 
     @ApiOperation("Delete based on primary key")
-    public void delete(@PathVariable("id") Long id);
+    public void delete(@PathVariable("id") String id);
 
     @ApiOperation("Find all data")
     public List<GameDTO> list();
@@ -28,5 +28,5 @@ public interface GameController {
     public Page<GameDTO> pageQuery(Pageable pageable);
 
     @ApiOperation("Update one data")
-    public GameDTO update(@RequestBody GameDTO dto, @PathVariable("id") Long id);
+    public GameDTO update(@RequestBody GameDTO dto, @PathVariable("id") String id);
 }

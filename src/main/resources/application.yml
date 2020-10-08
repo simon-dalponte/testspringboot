@@ -1,24 +1,25 @@
 server:
-  port: ${server.port}
+  port: 8081
 spring:
   datasource:
-    username: ${spring.datasource.username}
-    password: ${spring.datasource.password}
+    username: postgres
+    password: toto
     driver-class-name: org.postgresql.Driver
-    url: ${spring.datasource.url}
+    url: jdbc:postgresql://localhost:5432/postgres
     type: com.zaxxer.hikari.HikariDataSource
+
 
     jpa:
       properties:
         hibernate:
-          dialect: fr.utbm.dsi.inscription_pedag.data.modeleJSON.CustomPostgreSqlDialect
           jdbc:
             lob:
               non_contextual_creation: true
-      show-sql: ${spring.jpa.show-sql}
+      show-sql: true
       open-in-view: false
       hibernate:
         ddl-auto: validate
 
 web-client:
-  url: ${web-client.url}
+  url: http://localhost:4200
+

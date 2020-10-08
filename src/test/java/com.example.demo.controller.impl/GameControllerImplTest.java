@@ -69,14 +69,14 @@ public class GameControllerImplTest {
     public void getById() throws Exception {
         Mockito.when(gameMapper.asDTO(ArgumentMatchers.any())).thenReturn(GameBuilder.getDTO());
 
-        Mockito.when(gameService.findById(ArgumentMatchers.anyLong())).thenReturn(java.util.Optional.of(GameBuilder.getEntity()));
+        Mockito.when(gameService.findById(ArgumentMatchers.anyString())).thenReturn(java.util.Optional.of(GameBuilder.getEntity()));
 
         mockMvc.perform(MockMvcRequestBuilders.get(ENDPOINT_URL + "/1"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content()
                         .contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id", Is.is(1)));
-        Mockito.verify(gameService, Mockito.times(1)).findById(1L);
+        Mockito.verify(gameService, Mockito.times(1)).findById("1");
         Mockito.verifyNoMoreInteractions(gameService);
     }
 
@@ -97,24 +97,24 @@ public class GameControllerImplTest {
     @Test
     public void update() throws Exception {
         Mockito.when(gameMapper.asEntity(ArgumentMatchers.any())).thenReturn(GameBuilder.getEntity());
-        Mockito.when(gameService.update(ArgumentMatchers.any(), ArgumentMatchers.anyLong())).thenReturn(GameBuilder.getEntity());
+        Mockito.when(gameService.update(ArgumentMatchers.any(), ArgumentMatchers.anyString())).thenReturn(GameBuilder.getEntity());
 
         mockMvc.perform(
                 MockMvcRequestBuilders.put(ENDPOINT_URL + "/1")
                         .contentType(MediaType.APPLICATION_JSON_UTF8)
                         .content(CustomUtils.asJsonString(GameBuilder.getDTO())))
                 .andExpect(MockMvcResultMatchers.status().isOk());
-        Mockito.verify(gameService, Mockito.times(1)).update(ArgumentMatchers.any(Game.class), ArgumentMatchers.anyLong());
+        Mockito.verify(gameService, Mockito.times(1)).update(ArgumentMatchers.any(Game.class), ArgumentMatchers.anyString());
         Mockito.verifyNoMoreInteractions(gameService);
     }
 
     @Test
     public void delete() throws Exception {
-        Mockito.doNothing().when(gameService).deleteById(ArgumentMatchers.anyLong());
+        Mockito.doNothing().when(gameService).deleteById(ArgumentMatchers.anyString());
         mockMvc.perform(
                 MockMvcRequestBuilders.delete(ENDPOINT_URL + "/1"))
                 .andExpect(MockMvcResultMatchers.status().isOk());
-        Mockito.verify(gameService, Mockito.times(1)).deleteById(ArgumentMatchers.anyLong());
+        Mockito.verify(gameService, Mockito.times(1)).deleteById(ArgumentMatchers.anyString());
         Mockito.verifyNoMoreInteractions(gameService);
     }
 }

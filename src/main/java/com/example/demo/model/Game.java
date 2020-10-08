@@ -2,12 +2,15 @@ package com.example.demo.model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
+import java.util.UUID;
 
 @Entity
-public class Game implements AbstractEntity<Long> {
+@Table(catalog = "postgres", schema = "public" , name = "game")
+public class Game implements AbstractEntity<String> {
 
     @Id
-    private Long id_game;
+    private String id;
 
     private String name;
 
@@ -18,12 +21,12 @@ public class Game implements AbstractEntity<Long> {
     private Platform platform;
 
     @Override
-    public Long getId() {
-        return id_game;
+    public String getId() {
+        return id;
     }
 
-    public void setId(Long id) {
-        id_game = id;
+    public void setId(String id_game) {
+        id = id_game;
     }
 
     public String getName() {

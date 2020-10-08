@@ -5,9 +5,11 @@ import com.example.demo.dto.GameDTO;
 import com.example.demo.mapper.GameMapper;
 import com.example.demo.model.Game;
 import com.example.demo.service.GameService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -17,6 +19,8 @@ import java.util.Optional;
 @Service
 @Transactional
 public class GameServiceImpl implements GameService {
+
+    @Autowired
     private final GameRepository repository;
 
     public GameServiceImpl(GameRepository repository) {
@@ -34,14 +38,15 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
-    public void deleteById(Long id) {
-        repository.deleteById(id.toString());
+    public void deleteById(String id) {
+        repository.deleteById(id);
     }
 
     @Override
-    public Optional<Game> findById(Long id) {
-        return repository.findById(id.toString());
+    public Optional<Game> findById(String id) {
+        return repository.findById(id);
     }
+
 
     @Override
     public List<Game> findAll() {
@@ -56,7 +61,7 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
-    public Game update(Game entity, Long id) {
+    public Game update(Game entity, String id) {
         Optional<Game> optional = findById(id);
         if (optional.isPresent()) {
             return save(entity);

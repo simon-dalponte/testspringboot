@@ -5,9 +5,9 @@ import com.example.demo.model.Game;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper(componentModel = "spring", uses = ReferenceMapper.class)
+@Mapper
 public interface GameMapper extends GenericMapper<Game, GameDTO> {
     @Override
-    @Mapping(target = "id", ignore = false)
+    @Mapping(target = "id")
     Game asEntity(GameDTO dto);
 }

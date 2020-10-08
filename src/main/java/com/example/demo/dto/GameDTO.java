@@ -1,9 +1,11 @@
 package com.example.demo.dto;
 
 import com.example.demo.model.Platform;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class GameDTO extends AbstractDTO<String> {
-    private String id_game;
+    private String id;
     private String name;
     private String editor;
     private String description;
@@ -12,12 +14,12 @@ public class GameDTO extends AbstractDTO<String> {
     public GameDTO() {
     }
 
-    public void setId_game(String id_game) {
-        this.id_game = id_game;
+    public void setId(String id_game) {
+        this.id = id_game;
     }
 
-    public String getId_game() {
-        return this.id_game;
+    public String getId() {
+        return this.id;
     }
 
     public void setName(String name) {
