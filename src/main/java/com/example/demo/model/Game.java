@@ -1,8 +1,10 @@
 package com.example.demo.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -11,14 +13,18 @@ public class Game implements AbstractEntity<String> {
 
     @Id
     private String id;
-
+    @Column(name = "name")
     private String name;
-
+    @Column(name = "editor")
     private String editor;
-
+    @Column(name = "description")
     private String description;
-
+    @Column(name = "platform")
     private Platform platform;
+
+    @OneToMany(mappedBy = "rating")
+    @JsonBackReference
+    private Set<Rating> ratings = new HashSet<>();
 
     @Override
     public String getId() {
@@ -28,6 +34,10 @@ public class Game implements AbstractEntity<String> {
     public void setId(String id_game) {
         id = id_game;
     }
+
+    public Set<Rating> getRatings() { return ratings; }
+
+    public void setRatings(Set<Rating> ratings) { this.ratings = ratings; }
 
     public String getName() {
         return name;

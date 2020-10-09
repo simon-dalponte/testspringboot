@@ -1,7 +1,10 @@
 package com.example.demo.dto;
 
 import com.example.demo.model.Platform;
+import com.example.demo.model.Rating;
 import org.springframework.stereotype.Repository;
+
+import java.util.Set;
 
 @Repository
 public class GameDTO extends AbstractDTO<String> {
@@ -10,6 +13,7 @@ public class GameDTO extends AbstractDTO<String> {
     private String editor;
     private String description;
     private Platform platform;
+    private Set<Rating> ratings;
 
     public GameDTO() {
     }
@@ -53,4 +57,8 @@ public class GameDTO extends AbstractDTO<String> {
     public Platform getPlatform() {
         return this.platform;
     }
+
+    public Set<Rating> getRatings() { return ratings; }
+
+    public void setRatings(Set<Rating> ratings) { this.ratings = ratings; }
 }

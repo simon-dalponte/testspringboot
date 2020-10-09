@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@RequestMapping("/api/game")
+@RequestMapping("/game")
 @RestController
 public class GameControllerImpl implements GameController {
 
