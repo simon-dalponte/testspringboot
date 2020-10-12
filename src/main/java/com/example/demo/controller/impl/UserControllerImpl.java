@@ -1,10 +1,15 @@
 package com.example.demo.controller.impl;
 
 import com.example.demo.controller.UserController;
+import com.example.demo.dto.RatingDTO;
 import com.example.demo.dto.UserDTO;
+import com.example.demo.mapper.RatingMapper;
 import com.example.demo.mapper.UserMapper;
+import com.example.demo.model.Rating;
 import com.example.demo.model.User;
+import com.example.demo.service.RatingService;
 import com.example.demo.service.UserService;
+import com.fasterxml.uuid.Generators;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -13,7 +18,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RequestMapping("/user")
@@ -24,7 +28,8 @@ public class UserControllerImpl implements UserController {
     @Autowired
     private final UserMapper userMapper;
 
-    public UserControllerImpl(UserService userService, UserMapper userMapper) {
+
+    public UserControllerImpl(UserService userService, UserMapper userMapper, RatingMapper ratingMapper, RatingService ratingService) {
         this.userService = userService;
         this.userMapper = userMapper;
     }
@@ -34,6 +39,7 @@ public class UserControllerImpl implements UserController {
     @ResponseStatus(HttpStatus.CREATED)
     public UserDTO save(@RequestBody UserDTO userDTO) {
         User user = userMapper.asEntity(userDTO);
+        user.setId(Generators.randomBasedGenerator().generate().toString());
         return userMapper.asDTO(userService.save(user));
     }
 

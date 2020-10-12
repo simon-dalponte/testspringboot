@@ -7,6 +7,7 @@ import com.example.demo.mapper.RatingMapper;
 import com.example.demo.model.Rating;
 import com.example.demo.service.GameService;
 import com.example.demo.service.RatingService;
+import com.fasterxml.uuid.Generators;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -36,6 +37,7 @@ public class RatingControllerImpl implements RatingController {
     @ResponseStatus(HttpStatus.CREATED)
     public RatingDTO save(@RequestBody RatingDTO ratingDTO) {
         Rating rating = ratingMapper.asEntity(ratingDTO);
+        rating.setId(Generators.randomBasedGenerator().generate().toString());
         return ratingMapper.asDTO(ratingService.save(rating));
     }
 

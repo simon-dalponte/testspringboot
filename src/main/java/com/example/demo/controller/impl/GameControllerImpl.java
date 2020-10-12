@@ -2,16 +2,23 @@ package com.example.demo.controller.impl;
 
 import com.example.demo.controller.GameController;
 import com.example.demo.dto.GameDTO;
+import com.example.demo.dto.RatingDTO;
 import com.example.demo.mapper.GameMapper;
+import com.example.demo.mapper.RatingMapper;
+import com.example.demo.mapper.UserMapper;
 import com.example.demo.model.Game;
+import com.example.demo.model.Rating;
+import com.example.demo.model.User;
 import com.example.demo.service.GameService;
+import com.example.demo.service.RatingService;
+import com.example.demo.service.UserService;
+import com.fasterxml.uuid.Generators;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,9 +31,23 @@ public class GameControllerImpl implements GameController {
     @Autowired
     private final GameMapper gameMapper;
 
-    public GameControllerImpl(GameService gameService, GameMapper gameMapper1) {
+    @Autowired
+    private final RatingMapper ratingMapper;
+
+    @Autowired final RatingService ratingService;
+
+    @Autowired
+    private final UserService userService;
+    @Autowired
+    private final UserMapper userMapper;
+
+    public GameControllerImpl(GameService gameService, GameMapper gameMapper1, RatingMapper ratingMapper, RatingService ratingService, UserService userService, UserMapper userMapper) {
         this.gameService = gameService;
         this.gameMapper = gameMapper1;
+        this.ratingMapper = ratingMapper;
+        this.ratingService = ratingService;
+        this.userService = userService;
+        this.userMapper = userMapper;
     }
 
     @Override
@@ -34,7 +55,19 @@ public class GameControllerImpl implements GameController {
     @ResponseStatus(HttpStatus.CREATED)
     public GameDTO save(@RequestBody GameDTO gameDTO) {
         Game game = gameMapper.asEntity(gameDTO);
+        game.setId(Generators.randomBasedGenerator().generate().toString());
         return gameMapper.asDTO(gameService.save(game));
+    }
+
+    @PostMapping("/{id}/rating/user/{id_user}")
+    public RatingDTO addRating(@RequestBody RatingDTO ratingDTO, @PathVariable("id") String id, @PathVariable("id_user") String id_user ) {
+        Game game = gameService.findById(id).orElse(null);
+        User user = userService.findById(id_user).orElse(null);
+        Rating rating = ratingMapper.asEntity(ratingDTO);
+        rating.setId(Generators.randomBasedGenerator().generate().toString());
+        rating.setUser(user);
+        rating.setGame(game);
+        return ratingMapper.asDTO(ratingService.save(rating));
     }
 
     @Override

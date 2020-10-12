@@ -19,7 +19,3 @@ spring:
       open-in-view: false
       hibernate:
         ddl-auto: validate
-
-web-client:
-  url: http://localhost:4200
-
